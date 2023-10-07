@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types";
 import { calculateCarRent } from "@/utils/calc";
+import CustomButton from "@/components/CustomButton";
 
 interface CarCardProps {
   car: CarProps;
@@ -12,6 +13,7 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
   const { city_mpg, drive, make, model, transmission, year } = car;
   const carRent = calculateCarRent(city_mpg, year);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="car-card group">
       <div className="car-card__content">
@@ -25,13 +27,31 @@ const CarCard = ({ car }: CarCardProps) => {
         <span className="self-end text-[14px] font-medium">/day</span>
       </p>
       <div className="relative w-full h-40 my-3 object-contain">
-        <Image src="/hero.png" fill priority alt="car model" className="object-contain"  />
+        <Image src="/hero.png" fill priority alt="car model" className="object-contain" />
       </div>
       <div className="relative flex w-full mt-2">
         <div className="flex group-hover:invisible w-full justify-between text-gray">
-            <div className="flex flex-col justify-center items-center gap-2">
-                <Image width={20} height={20} src="/steering-wheel.svg" alt="steering wheel"  />
-            </div>
+          <div className="flex flex-col justify-center items-center gap-2">
+            <Image width={20} height={20} src="/steering-wheel.svg" alt="steering wheel" />
+            <p className="text-[14px]">{transmission === "a" ? "Automatic" : "Manual"}</p>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-2">
+            <Image width={20} height={20} src="/tire.svg" alt="tire" />
+            <p className="text-[14px]">{drive.toUpperCase()}</p>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-2">
+            <Image width={20} height={20} src="/gas.svg" alt="gas" />
+            <p className="text-[14px]">{city_mpg} MPG</p>
+          </div>
+        </div>
+        <div className="car-card__btn-container">
+          <CustomButton
+            title="View More"
+            containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
+            textStyles="text-white text-[14px] leading-[17px] font-bold"
+            rightIcon="/right-arrow.svg"
+            handleClick={() => setIsOpen(true)}
+          />
         </div>
       </div>
     </div>
