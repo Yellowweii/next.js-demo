@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CarCard, CustomFilter, Hero, SearchBar } from "@/sections";
 import { fetchCars } from "@/utils/request";
+import { CarProps } from "@/types";
 
 export default async function Home() {
   const allCars = await fetchCars();
@@ -25,7 +26,7 @@ export default async function Home() {
         </div>
         <section>
           <div className="home__cars-wrapper">
-            {allCars.map((car:JSX.Element, index: number) => (
+            {allCars.map((car: CarProps, index: number) => (
               <CarCard key={index} car={car} />
             ))}
           </div>
